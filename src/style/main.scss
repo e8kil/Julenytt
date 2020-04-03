@@ -1,0 +1,423 @@
+html body {
+    margin: 0px;
+    padding: 0px;
+    height: 100%;
+    width: 100%;
+    background: #fff;
+}
+
+.julenytt {
+    color: #666;
+
+    .julenytt-headerimage {
+        background-image: url('../Images/header.JPG');
+        position: relative;
+        width: 100%;
+        height: 250px;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;        
+        color: #fff;
+        text-align: center;
+        
+        h1 {
+            padding-top: 30px;
+            font-size: 125px;
+
+        }
+    }
+
+    h1 {
+        margin: 0px;
+        font-family: 'Raleway', Helvetica, Arial, sans-serif;
+        font-variant: small-caps;
+        color: white;
+        font-weight: bold;
+        text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;        
+    }
+
+    .julenytt-error {
+        color: white;
+        background: red;
+        padding: 10px;
+        position: fixed;
+        bottom: 10px;
+        right: 28px;
+    }
+
+    .julenytt-success {
+        color: white;
+        background: green;
+        padding: 10px;
+        position: fixed;
+        bottom: 10px;
+        right: 28px;
+    }
+
+    .content {
+        width: 90%;
+        left: 50%;
+        position: relative;
+        max-width: 800px;
+        transform: translate(-50%, 0%);
+    }
+
+    .julenytt-menu {
+        background: #202020;
+        height: 50px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-around;
+       
+        .julenytt-menu-item:hover {
+            background-color: #808080
+        }
+
+        .julenytt-menu-item {
+            flex-direction: column;
+            flex: 1;
+            text-align: center;
+            height: calc(100% - 10px);
+            padding-top:10px;
+            color: #fff;
+            font-size: 25px;
+            text-decoration: none;
+            font-family: 'Raleway', Helvetica, Arial, sans-serif;         
+
+            a {
+                color: #999;
+                text-decoration: none;
+                font-family: 'Raleway', Helvetica, Arial, sans-serif;
+                font-variant: small-caps;
+                color: white;     
+                font-weight: bold;
+                font-size: 20px;           
+            }
+
+ 
+
+        }   
+        
+        .menu-item-active {
+            background-color: #434343;
+        }
+    }
+
+    input, textarea, select {
+        padding: 7px;
+        border: 1px solid #ddd;
+        margin-right: 5px;
+    }
+
+
+    .text-container {
+        margin: 50px 10px 20px 10px;
+        line-height: 25px;
+        white-space: pre-line;
+        text-align: justify;
+    }
+
+    .text-edit-container {
+        padding: 10px;
+        box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
+        margin-top: 20px;
+        display: inherit;
+        margin-bottom: 20px;
+    }
+
+    .linkToMorePhotos {
+        text-align: center;
+        border-bottom: 1px solid #000;
+        font-style: italic;
+        cursor: pointer;
+        left: 39%;
+        position: relative;
+        transform: translate(-52%, 0%);
+        top: 25px;        
+    }
+
+    .pageContainer {
+        width: 95%;
+        max-width: 900px;
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%); 
+    }
+
+    .arcivesContainer {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-around;
+        margin-top: 30px;
+        margin-bottom: 30px;
+
+        .pdf-container {
+            width: calc(33% - 20px);
+            margin: 10px;
+            height: 415px;
+            box-shadow: 0px 2px 8px rgba(0,0,0,0.25);
+            flex-direction: column;
+            max-width: 280px;
+            min-width: 280px;    
+            position: relative;
+
+            .edit-arcive-delete-icon {
+                position: absolute;
+                top:0px;
+                right:0px;
+                width: 20px;
+                height: 20px;
+                cursor: pointer;
+            }
+
+            a {
+                text-decoration: none;
+                color: #000;
+            }
+
+            .arcive-title {
+                width: 100%;
+                text-align: center;
+                font-family: 'Raleway', Helvetica, Arial, sans-serif;
+                font-weight: 600;
+                font-size: 30px;
+            }
+
+            .arcive-image {
+                background-size: cover;
+                width: 100%;
+                background-position: center;
+                background-repeat: no-repeat;
+                height: 380px;
+            }
+
+            .arcive-image-missing {
+                img {
+                    margin-top: 50px;
+                    width: 60%;
+                    margin-left: 20%;
+                }
+            }
+            
+            .arcive-missing-image-container {
+                img {
+                    width: 60%;
+                    margin-left: 20%;
+                    margin-top: 30%;
+                }
+            }
+
+        } 
+
+        .editPdfs-upload-container {
+            width: 33%;
+            height: 415px;
+            box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);    
+            text-align: center;
+            position: relative;
+            cursor: pointer;
+            
+            img {
+                margin-top: 30%;
+                width: 60%;
+                margin-left: 8%;
+            }
+
+            .edit-Pdfs-upload-image-button {
+                width: 150px;
+                border-radius: 10px;
+                color: #fff;
+                text-align: center;
+                background-color: #4d98a5;
+                height: 40px;
+            }
+        }
+
+        .editPdfs-upload-file-button-container, .editPdfs-upload-image-button-container {
+            height: 30px;
+            background: #4d98a5;
+            border-radius: 10px;
+            left: 50%;
+            position: relative;
+            margin-left: -75px;
+            margin-top: 10px;
+            color: #fff;
+            padding-top: 10px;
+            text-align: center;
+            width:150px
+        }
+
+        input[type='file'] {
+            height: 100%;
+            width: 100%;
+            opacity: 0;
+            position: absolute;
+            top: 0px;
+            left:0px;
+            cursor: pointer;
+        }
+
+        input[type='text'] {
+            height: 20px;
+            width: 90%;
+            text-align: center;
+            margin: 10px;
+        }
+
+
+
+
+
+    }
+
+    .editPhotos-container {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        margin-top:20px;
+    }
+
+    .editPhotos-upload-container {
+        width: 33%;
+        height: 325px;
+        margin-top: 15px;  
+        box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);    
+        text-align: center;
+        position: relative;
+        cursor: pointer;
+        
+        img {
+            margin-top: 50px;
+        }
+
+        input[type='file'] {
+            height: 100%;
+            width: 100%;
+            opacity: 0;
+            position: absolute;
+            top: 0px;
+            left:0px;
+            cursor: pointer;
+        }
+    }
+
+    .linkDeleteAllPhotos-container {
+        display: inline-block;
+        width: 100%;
+        margin: 20px;
+        text-align: center;
+    }
+    .linkDeleteAllPhotos {
+        font-style: italic;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    .editPhoto-container {
+
+        width: 31%;
+        height: auto;
+        box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.2);
+        padding: 5px;
+        margin-top: 15px;
+        position: relative;
+
+        .editphoto {
+            background-position: center;
+            background-size: contain;
+            background-repeat: no-repeat;
+            width: 100%;
+            height: 200px;   
+        }
+
+        .editPhoto-delete-icon {
+            position: absolute;
+            right:0;
+            top:0;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            background-color: rgba(255,255,255,0.8);
+        }
+
+        .editPhoto-text {
+            margin-top: 20px;
+            width: 100%;
+            max-height: 50px;
+            max-width: 100%;
+        }
+    }
+
+    .saveButton {
+        width: 100%;
+        text-align: center;
+        color: #fff;
+        background: #43d1af;
+        border: none;
+        padding: 7px;
+        font-size: 1.1em;
+        margin: 12px 12px 0 0;
+        cursor: pointer;         
+    }
+
+    button:disabled,
+    input[type=save]:disabled {
+        color: #ddd;
+        background: #aaa;
+        cursor: not-allowed;
+    }
+
+    .editPhoto-container {
+        input[type=save] {
+            width: 100%;
+            text-align: center;
+            color: #fff;
+            background: #43d1af;
+            border: none;
+            padding: 7px;
+            font-size: 1.1em;
+            margin: 12px 12px 0 0;
+            cursor: pointer;         
+        }
+    }
+
+    .editPhoto-container {
+        input[type=save]:disabled {
+            color: #ddd;
+            background: #aaa;
+            cursor: not-allowed;       
+        }
+    }    
+
+
+
+
+
+}
+
+
+/* width */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+
+
