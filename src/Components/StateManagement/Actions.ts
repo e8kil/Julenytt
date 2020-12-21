@@ -122,7 +122,6 @@ class Actions {
     updatePhotoTitle = (photo: Photo) => {
 
         this.requests.updatePhotoTitle(photo, (data: AjaxData) => {
-            console.log(data)
             if (data.status === Status.error) {
                 this.error(data.error)
             }

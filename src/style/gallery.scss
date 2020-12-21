@@ -23,11 +23,10 @@
 
     .gallery-container-homePage-fullscreen, .gallery-container-photosPage-fullscreen {
         .image-gallery-image {
-            height: calc(100vh - 150px);
+            height: calc(100% - 70px);
             width: 90vw;
-            margin-top: 20px;
+            margin-top: 35px;
             max-width: 90vw;
-            max-height: 85vh;
         }
 
         .image-gallery-thumbnail img {
@@ -38,7 +37,7 @@
 
     .gallery-container-photosPage {
         .image-gallery-content .image-gallery-slide .image-gallery-image {
-            height: calc(100vh - 150px);
+            height: calc(100vh - 160px);
             margin-top: 10px;
         }    
 

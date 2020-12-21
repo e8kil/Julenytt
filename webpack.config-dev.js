@@ -1,7 +1,4 @@
 const path = require("path")
-const CopyWebpackPlugin = require("copy-webpack-plugin")
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-
 module.exports = {
     entry: "./src/index.tsx",
     output: {
@@ -38,15 +35,8 @@ module.exports = {
             { test: /\.(png|jpg|jpeg|gif|svg)$/, loader: "url-loader?limit=100000" }
         ]
     },
-    plugins: [
-        new CleanWebpackPlugin(),
-        new CopyWebpackPlugin(
-        { 
-            patterns: [
-            { from: "index.html", to: "index.html" },
-            { from: "devServer.js", to: "server.js" }
-            ]
-        })
-    ]
-    
+    devServer: {
+        stats: { colors: true },
+        hot: true
+    }
 }

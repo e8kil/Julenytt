@@ -11,7 +11,6 @@ interface Props {
     actions: Actions
     store: Store
     loggedIn: boolean
-    year: number
 }
 
 class HomePage extends React.Component<Props, {}> {
@@ -22,12 +21,26 @@ class HomePage extends React.Component<Props, {}> {
         this.props.actions.getTextData()
     }
 
+    getYear() {
+        var d = new Date()
+        var year = d.getFullYear()
+        var month = d.getMonth()
+    
+        if (month == 11) {
+          return year
+        } else {
+          return year - 1
+        }
+    }
+
     render() {
         const renderHomes = (storeData: StoreData) => 
-            <LoadWrapper statusList={[storeData.textData.status, storeData.photoList.status]}> 
-                <Header year={this.props.year}></Header>
-                <Home loggedIn={this.props.loggedIn} storeData={storeData} actions={this.props.actions} /> 
-            </LoadWrapper>
+            <>
+                <Header year={this.getYear()}></Header>
+                <LoadWrapper statusList={[storeData.textData.status, storeData.photoList.status]}> 
+                    <Home loggedIn={this.props.loggedIn} storeData={storeData} actions={this.props.actions} /> 
+                </LoadWrapper>
+            </>
 
         return <StoreWrapper<StoreData> store={this.props.store} render={renderHomes} />
     }

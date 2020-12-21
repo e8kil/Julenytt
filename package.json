@@ -5,8 +5,8 @@
   "main": "index.tsx",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server",
-    "build": "webpack --mode production",
+    "start": "webpack-dev-server --config webpack.config-dev.js -d --port 8090",
+    "build": "webpack --config webpack.config.js -p",
     "check-types": "tsc"
   },
   "author": "Eskil Klepaker",
@@ -29,6 +29,7 @@
     "axios": "^0.19.2",
     "babel-loader": "^8.1.0",
     "canvas": "^2.6.1",
+    "copy-webpack-plugin": "^6.2.1",
     "cors": "^2.8.5",
     "css-loader": "^3.2.1",
     "epxress": "0.0.1-security",

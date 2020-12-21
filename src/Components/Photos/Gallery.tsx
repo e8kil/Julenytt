@@ -16,13 +16,16 @@ function Gallery(props: Props) {
 
     const [redirect, updateRedirect] = React.useState(false)
     const [fullscreen, updateFullscreen] = React.useState(false)
+    const [showThumbnails, updateShowThumbnails] = React.useState(props.showThumbnails)
 
     const getImages = (images:Photo[]) => {
         let imageList:any = []
         images.forEach((p: Photo) => {
+            var image = require("../../../src/Images/uploads/" + p.id).default
+
             imageList.push({
-                original: '../../../src/Images/uploads/'+ p.id,
-                thumbnail: '../../../src/Images/uploads/' + p.id,
+                original: image,
+                thumbnail: image,
                 description: p.title,
                 sizes: {
                     height: "200px",
@@ -39,7 +42,7 @@ function Gallery(props: Props) {
         var year = d.getFullYear()
         var month = d.getMonth()
 
-        if (month == 12) {
+        if (month == 11) {
             return year
         } else {
             return year - 1
@@ -47,28 +50,30 @@ function Gallery(props: Props) {
     }
 
     const fullscreenToggle = (target:any) => {
-        if (target !== null) {
-            console.log(target)
+        if (target) {
             updateFullscreen(true)
+            updateShowThumbnails(false)
         } else {
             updateFullscreen(false)
+            updateShowThumbnails(props.showThumbnails ? true: false)
         }
     }
 
     return <div className={fullscreen ? "gallery-container-" + props.extraClass + "-fullscreen" : "gallery-container-"+props.extraClass}>
+            
             <ImageGallery 
                 items={getImages(props.photos)}
-                slideDuration={300}
-                slideInterval={3000}
+                slideDuration={500}
+                slideInterval={5000}
                 showThumbnails={props.showThumbnails}
                 autoPlay={props.autoPlay}
                 lazyLoad={true}
-            onScreenChange={(e: any) => fullscreenToggle(e) }
+                onScreenChange={(e: any) => fullscreenToggle(e) }
             />
             
             {props.extraClass == "homePage" &&  <a className="linkToMorePhotos" onClick={() => updateRedirect(true)}> Sjå fleire bilete fra {getYear()} her </a>}
 
-        {redirect && <Redirect to="/Photos" />}
+        {redirect && <Redirect to="/Bilder" />}
 
     </div >
 

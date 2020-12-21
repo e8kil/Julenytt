@@ -14,13 +14,12 @@ function Arcive(props: Props) {
     const [image, updateImage] = React.useState(null)
 
     fetch('../../../src/PdfImages/'+props.pdf.id+'.jpg', {})
-        .then((response) => { console.log(response); if(response.status === 200) { updateImage(response.url)}} )
+        .then((response) => { if(response.status === 200) { updateImage(response.url)}} )
 
 
     const onChangeHandler = (event: any) => {
         const data = new FormData()
         data.append('file', event.target.files[0])
-        console.log(data)
         props.actions.uploadPdfImage(data, parseInt(props.pdf.id))
     }
 

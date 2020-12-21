@@ -26,11 +26,11 @@ function Home(props: Props) {
         
         {textData[0].txt !== "" && <TextContainer actions={props.actions} loggedIn={props.loggedIn} text={textData[0]} ></TextContainer> }
 
-        <Photos imagePosition={1} extraClass={"homePage"} actions={props.actions} loggedIn={props.loggedIn} photos={getPhotosForRow(1)} showThumbnails={true} autoplay={false}></Photos>
+        <Photos imagePosition={1} extraClass={"homePage"} actions={props.actions} loggedIn={props.loggedIn} photos={getPhotosForRow(1)} showThumbnails={true} autoplay={true}></Photos>
 
         {textData[1].txt !== "" && <TextContainer actions={props.actions} loggedIn={props.loggedIn} text={textData[1]} ></TextContainer> }
 
-        <Photos imagePosition={2}  extraClass={"homePage"} actions={props.actions} loggedIn={props.loggedIn} photos={getPhotosForRow(2)} showThumbnails={true} autoplay={false}></Photos>
+        <Photos imagePosition={2}  extraClass={"homePage"} actions={props.actions} loggedIn={props.loggedIn} photos={getPhotosForRow(2)} showThumbnails={true} autoplay={true}></Photos>
 
         {textData[2].txt !== "" && <TextContainer actions={props.actions} loggedIn={props.loggedIn} text={textData[2]} ></TextContainer> }
 

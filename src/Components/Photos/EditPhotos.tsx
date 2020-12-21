@@ -15,26 +15,17 @@ function EditPhotos(props: Props) {
     const [selectedImage, updateSelectedImage] = React.useState(null)
     const [loaded, updateLoaded] = React.useState(0)
 
-    console.log(props.photos)
-
     const onChangeHandler = (event: any) => {
         const data = new FormData()
         for (var x = 0; x < event.target.files.length; x++) {
             data.append('file', event.target.files[x])
         }
-        console.log(data)
         props.actions.uploadPhoto(data, props.imagePosition)        
     }
 
-    // const onClickHandler = () => {
-    //     const data = new FormData()
-    //     data.append('file', selectedImage)
-    //     props.actions.uploadPhoto(data)
-    // }
     const deleteAllPhotos = () => {
         let c = confirm("Dette vil slette alle bildene på julenytt. Ønsker du å fortsette?")
         if(c) {
-            console.log("Slett")
             props.actions.deleteAllPhotos()
         }
     }
