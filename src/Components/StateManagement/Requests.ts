@@ -3,56 +3,57 @@ import { Login, Photo, Text } from './Store'
 
 class Requests {
 
+    private apiUrl
     constructor() {
-
+        this.apiUrl = "#{apiUrl}"
     }
 
     logIn(login: Login, callback: (data: AjaxData) => void) {
-        doRequest('http://localhost:3000/login', 'POST', login, callback)
+        doRequest(''+this.apiUrl+'/login', 'POST', login, callback)
     }
 
     getTextData(callback: (data: AjaxData) => void) {
-        doRequest('http://localhost:3000/getTexts', 'GET', null, callback)
+        doRequest(''+this.apiUrl+'/getTexts', 'GET', null, callback)
     }
 
     updateTextData(text: Text, callback: (data: AjaxData) => void) {
-        doRequest('http://localhost:3000/updateText', 'POST', text, callback)
+        doRequest(''+this.apiUrl+'/updateText', 'POST', text, callback)
     }   
     
     getPhotos(callback: (data: AjaxData) => void) {
-        doRequest('http://localhost:3000/getPhotos', 'GET', null, callback)
+        doRequest(''+this.apiUrl+'/getPhotos', 'GET', null, callback)
     }
 
     updatePhotoTitle(photo: Photo, callback: (data: AjaxData) => void) {
-        doRequest('http://localhost:3000/updatePhotoTitle', 'POST', photo, callback)
+        doRequest(''+this.apiUrl+'/updatePhotoTitle', 'POST', photo, callback)
     }    
 
     uploadPhoto(files: FormData, position: number, callback: (data: AjaxData) => void) {
-        doRequest('http://localhost:3000/uploadPhoto/' + position + '', 'POST', files, callback)
+        doRequest(''+this.apiUrl+'/uploadPhoto/' + position + '', 'POST', files, callback)
     }   
 
     deletePhoto(id: String, callback: (data: AjaxData) => void) {
-        doRequest('http://localhost:3000/deletePhoto/', 'POST', {id: id}, callback)
+        doRequest(''+this.apiUrl+'/deletePhoto/', 'POST', {id: id}, callback)
     }  
 
     deleteAllPhotos(callback: (data: AjaxData) => void) {
-        doRequest('http://localhost:3000/deleteAllPhotos/', 'POST', null, callback)
+        doRequest(''+this.apiUrl+'/deleteAllPhotos/', 'POST', null, callback)
     }  
 
     getPdfs(callback: (data: AjaxData) => void) {
-        doRequest('http://localhost:3000/getPdfs/', 'GET', null, callback)
+        doRequest(''+this.apiUrl+'/getPdfs/', 'GET', null, callback)
     } 
     
     uploadPdf(File: FormData, year:number, callback: (data: AjaxData) => void) {
-        doRequest('http://localhost:3000/uploadPdf/' + year + '', 'POST', File, callback)
+        doRequest(''+this.apiUrl+'/uploadPdf/' + year + '', 'POST', File, callback)
     }  
 
     uploadPdfImage(File: FormData, year: number, callback: (data: AjaxData) => void) {
-        doRequest('http://localhost:3000/uploadPdfImage/' + year + '', 'POST', File, callback)
+        doRequest(''+this.apiUrl+'/uploadPdfImage/' + year + '', 'POST', File, callback)
     }  
 
     deletePdf(year: number, callback: (data: AjaxData) => void) {
-        doRequest('http://localhost:3000/deletePdf/' + year + '', 'POST', File, callback)
+        doRequest(''+this.apiUrl+'/deletePdf/' + year + '', 'POST', File, callback)
     }  
 }
 

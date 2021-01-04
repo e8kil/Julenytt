@@ -35,7 +35,16 @@ module.exports = {
                 test: /\.(s*)css$/,
                 use: [{ loader: "style-loader", options: { injectType: "singletonStyleTag" } }, { loader: "css-loader" }, { loader: "sass-loader" }]
             },
-            { test: /\.(png|jpg|jpeg|gif|svg)$/, loader: "url-loader?limit=100000" }
+            { test: /\.(png|jpg|jpeg|gif|svg)$/, loader: "url-loader?limit=100000" },
+            {
+                test: /\.ts(x)?$/, 
+                loader: 'string-replace-loader',
+                options: {
+                  multiple: [
+                     { search: '\#\{apiUrl\}', replace: 'https://klepaker.no/juleapi', flags: 'g' },            
+                  ]
+                }
+            }
         ]
     },
     plugins: [
