@@ -14,7 +14,7 @@ function Arcive(props: Props) {
 
     const [image, updateImage] = React.useState(null)
 
-    fetch('../../../src/PdfImages/'+props.pdf.id+'.jpg', {})
+    fetch('../../../Uploads/PdfImages/'+props.pdf.id+'.jpg', {})
         .then((response) => { if(response.status === 200) { updateImage(response.url)}} )
 
 
@@ -33,7 +33,7 @@ function Arcive(props: Props) {
 
     return <div className="Pdf-container">
                 {(props.loggedIn && props.edit) && <img onClick={() => deleteAllPhotos()} className="edit-arcive-delete-icon" title="Slett bilde" src="https://img.icons8.com/ios-glyphs/30/000000/delete-sign.png" /> }
-                <a href={'../../../src/pdfFiles/' + props.pdf.id + '.pdf'} target="_blank">
+                <a href={'../../../Uploads/PdfFiles/' + props.pdf.id + '.pdf'} target="_blank">
                     <div className="arcive-title">{props.pdf.name}</div>
                     {image && <div className="arcive-image" style={{ backgroundImage: 'url('+image+')' }} > </div > }
                     {!image && props.loggedIn &&

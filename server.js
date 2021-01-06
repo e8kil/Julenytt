@@ -89,32 +89,41 @@ app.post('/updatePhotoTitle/', verifyJWT, function (req, res) {
 });
 
 app.post('/deletePhoto', verifyJWT, function (req, res) {
-    fs.unlink('src/Images/uploads/' + req.body.id, (err) => {
-        if (err) throw err;
+   
+    if (fs.existsSync('Uploads/Images/' + req.body.id)) {
+        fs.unlink('Uploads/Images/' + req.body.id, (err) => {
+            if (err) throw err;
+            connection.query(`DELETE FROM images WHERE id='${req.body.id}'`, function (error, results) {
+                if (error) throw error;
+                res.json({auth: true, results});
+            });
+        })
+    } else {
         connection.query(`DELETE FROM images WHERE id='${req.body.id}'`, function (error, results) {
             if (error) throw error;
-            // res.send(results);
             res.json({auth: true, results});
         });
-    })
+    }
 });
 
 app.post('/deleteAllPhotos', verifyJWT, function (req, res) {
-    var directory = 'src/Images/uploads/'
+    var directory = 'Uploads/Images/'
     fs.readdir(directory, (err, files) => {
         if (err) throw err;
 
         for (const file of files) {
-            fs.unlink(path.join(directory, file), err => {
-                if (err) throw err;
-                connection.query(`DELETE FROM images WHERE id='${file}'`, function (error, results) {
-                    if (error) throw error;
-                });                
-            });
+            if (fs.existsSync(path.join(directory, file))) {
+                fs.unlink(path.join(directory, file), (err) => {
+                    if (err) throw err;
+                })
+            } 
         }
+
+        connection.query(`DELETE FROM images`, function (error, results) {
+            if (error) throw error;
+        });
     });  
     
-    // res.send("200");
     res.json({auth: true, data: "200"});
 });
 
@@ -126,28 +135,28 @@ const InsertimagesToDatabase = (file, imagePosition) => {
                     throw error;
                 }
                 
-                sizeOf('src/Images/uploads/' + file.filename, function (err, dimensions) {
+                sizeOf('Uploads/Images/' + file.filename, function (err, dimensions) {
                     try {
                         if (dimensions.width > dimensions.height) {
-                            Clipper('src/Images/uploads/' + file.filename, function () {
+                            Clipper('Uploads/Images/' + file.filename, function () {
                                 this.resize(1000)
-                                .toFile('src/Images/uploads/' + file.filename, (res) => {
+                                .toFile('Uploads/Images/' + file.filename, (res) => {
                                     resolve()
                                 })
                             })
                         } else {
-                            Clipper('src/Images/uploads/' + file.filename, function () {
+                            Clipper('Uploads/Images/' + file.filename, function () {
                                 this.resize(null, 1000)
-                                .toFile('src/Images/uploads/' + file.filename, (res) => {
+                                .toFile('Uploads/Images/' + file.filename, (res) => {
                                     resolve()
                                 })
                             });
                         }
                     } catch (e) {
                         try{
-                            Clipper('src/Images/uploads/' + file.filename, function () {
+                            Clipper('Uploads/Images/' + file.filename, function () {
                                 this.resize(null, 700)
-                                .toFile('src/Images/uploads/' + file.filename, (res) => {
+                                .toFile('Uploads/Images/' + file.filename, (res) => {
                                     resolve()
                                 })
                             });
@@ -163,7 +172,7 @@ const InsertimagesToDatabase = (file, imagePosition) => {
 
 var uploadStorage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'src/Images/uploads')
+        cb(null, 'Uploads/Images/')
     },
     filename: function (req, file, cb) {
         cb(null, Date.now() + '-' + file.originalname)
@@ -217,7 +226,7 @@ app.get('/getPdfs', function (req, res) {
 
 var pdfStorage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'src/PdfFiles/')
+        cb(null, 'Uploads/PdfFiles/')
     },
     filename: function (req, file, cb) {
         cb(null, req.params.year +'.pdf')
@@ -246,7 +255,7 @@ app.post('/uploadPdf/:year', verifyJWT, function (req, res) {
 
 var pdfImageStorage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'src/PdfImages/')
+        cb(null, 'Uploads/PdfImages/')
     },
     filename: function (req, file, cb) {
         cb(null, req.params.year + '.jpg')
@@ -263,9 +272,9 @@ app.post('/uploadPdfImage/:year', verifyJWT, function (req, res) {
             return res.status(500).json(err)
         }
 
-        Clipper('src/PdfImages/' + req.params.year + '.jpg', function () {
+        Clipper('Uploads/PdfImages/' + req.params.year + '.jpg', function () {
             this.resize(null, 1000)
-                .toFile('src/PdfImages/' + req.params.year + '.jpg', (result) => {
+                .toFile('Uploads/PdfImages/' + req.params.year + '.jpg', (result) => {
                     res.json({auth: true, data: "200"});
                 })
         });
@@ -274,12 +283,12 @@ app.post('/uploadPdfImage/:year', verifyJWT, function (req, res) {
 });
 
 app.post('/deletePdf/:year', function (req, res) {
-    fs.unlink('src/PdfFiles/' + req.params.year + '.pdf', (err) => {
+    fs.unlink('Uploads/PdfFiles/' + req.params.year + '.pdf', (err) => {
         if (err) throw err;
         connection.query(`DELETE FROM pdf WHERE id='${req.params.year}'`, function (error, results) {
             if (error) throw error;
 
-            fs.unlink('src/PdfImages/' + req.params.year + '.jpg', (err) => {
+            fs.unlink('Uploads/PdfImages/' + req.params.year + '.jpg', (err) => {
                 if (err) throw err;
                 // res.send(results);
                 res.json({auth: true, data: results});

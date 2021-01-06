@@ -7,12 +7,12 @@ import {
   useHistory, 
   Redirect
 } from "react-router-dom"
-import "./style/main.scss"
-import "./style/loader.scss"
-import "./style/900px.scss"
-import "./style/600px.scss"
-import "./style/400px.scss"
-import "./style/snow.scss"
+import "./Style/main.scss"
+import "./Style/loader.scss"
+import "./Style/900px.scss"
+import "./Style/600px.scss"
+import "./Style/400px.scss"
+import "./Style/snow.scss"
 import Messages from "./Messages"
 import Header from "./Components/Header/Header"
 import { Store } from "./Components/StateManagement/Store"

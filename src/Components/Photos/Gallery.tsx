@@ -21,12 +21,17 @@ function Gallery(props: Props) {
     const getImages = (images:Photo[]) => {
         let imageList:any = []
         images.forEach((p: Photo) => {
-            var image = require("../../../src/Images/uploads/" + p.id).default            
-            imageList.push({
-                original: image,
-                thumbnail: image,
-                description: p.title
-            })
+            try {
+                var image = require("../../../Uploads/Images/" + p.id).default            
+                imageList.push({
+                    original: image,
+                    thumbnail: image,
+                    description: p.title
+                })
+            } catch(e) {
+                console.error("Klarte ikke finne: " + p.id)
+            }
+
         })
 
         return imageList
