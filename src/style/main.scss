@@ -9,6 +9,10 @@ html body {
 .loginContainer {
     text-align: center;
     margin-top: 50px;
+
+    h1 {
+        padding: 30px;
+    }
 }
 
 .julenytt {
@@ -40,6 +44,10 @@ html body {
         font-weight: bold;
         text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;        
     }
+
+    h2 {
+        font-family: 'Raleway', Helvetica, Arial, sans-serif;
+    }    
 
     .julenytt-error {
         color: white;
@@ -145,7 +153,7 @@ html body {
     .pageContainer {
         width: 95%;
         max-width: 900px;
-        position: absolute;
+        position: relative;
         left: 50%;
         transform: translate(-50%); 
     }
@@ -281,7 +289,7 @@ html body {
         display: flex;
         flex-wrap: wrap;
         align-items: center;
-        justify-content: space-between;
+        justify-content: space-evenly;
         margin-top:20px;
     }
 
@@ -399,7 +407,32 @@ html body {
 
 
 
+    .footer {
+        width: 100%;
+        text-align: center;
+        padding:40px 0px;
+        font-family: 'Ubuntu', sans-serif;
+        font-size: 12px;
+    }
 
+    .editButton {
+        position: fixed;
+        bottom: 20px;
+        transform: translate(-50%, 0%);
+        left: 50%;
+
+        input {
+            text-align: center;
+            background-color: rgb(0, 172, 0);
+            border-radius: 20px;
+            color: #fff;
+            font-size: 18px;
+            font-family: 'Ubuntu', sans-serif;
+            box-shadow: 0px 2px 3px 2px rgba(0, 0, 0, 0.5);
+            border:none;
+            cursor: pointer;
+        }
+    }
 
 }
 

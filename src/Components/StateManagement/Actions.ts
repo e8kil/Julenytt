@@ -1,6 +1,7 @@
 import { Status, AjaxData, defaultRemoteData } from '../../requestHelper'
 import { Store, Photo, Login } from './Store'
 import Requests from './Requests';
+import { history } from '../../helpers'
 
 class Actions {
 
@@ -8,55 +9,82 @@ class Actions {
     private store: Store
     private success: (m: string) => void
     private error: (m: string) => void
-    private loggedIn: (loggedIn: boolean) => void
+    private setLoggedInStatus: (d: boolean) => void
+    private setEditMode: () => void
 
-    constructor(requests: Requests, store: Store, error: (m: string) => void, success: (m: string) => void, loggedIn: (loggedIn: boolean) => void ) {
+    constructor(requests: Requests, store: Store, error: (m: string) => void, success: (m: string) => void, setLoggedInStatus: (d: boolean) => void, setEditMode: () => void) {
         this.requests = requests
         this.store = store
         this.success = success
         this.error = error
-        this.loggedIn = loggedIn
+        this.setLoggedInStatus = setLoggedInStatus
+        this.setEditMode = setEditMode
     }
 
-    logIn = (login: Login) => {
-        this.requests.logIn(login, (data: AjaxData) => {
+    loggedIn = () => {
+        this.requests.loggedIn((data: AjaxData) => {
+
             if (data.status === Status.error) {
                 this.error(data.error)
             }
 
             if (data.status === Status.complete) {
-                if (data.data[0].count > 0) {
-                    this.loggedIn(true)
+                this.store.setState({ loggedIn: data.data.auth })
+                this.setLoggedInStatus(data.data.auth)
+            }
+        })
+    }
+
+    logIn = (login: Login) => {
+        this.requests.logIn(login, (data: AjaxData) => {
+
+            if (data.status === Status.error) {
+                this.error(data.error)
+            }
+
+            if (data.status === Status.complete) {
+                if (data.data.auth) {
                     this.success("Logget inn")
+                    localStorage.setItem("token", data.data.token)
                 } else {
                     this.error("Feil brukernavn eller passord")
                 }
-                this.store.setState({ loggedIn: data.data[0].count > 0 })
+                this.setLoggedInStatus(data.data.auth)
             }
         })
     }
 
     logOut = () => {
-        this.store.setState({ loggedIn: false })
+        this.setLoggedInStatus(false)
     }
 
-    getTextData = () => {
+    getTextData = (scroll:number) => {
         this.requests.getTextData((data: AjaxData) => {
             if (data.status === Status.error) {
                 this.error(data.error)
             }
             this.store.setState({ textData: data })
+            window.scroll({ top: scroll })
         })
     }
 
     updateTextData = (text: any) => {
+        let offset = window.pageYOffset
         this.requests.updateTextData(text, (data: AjaxData) => {
             if (data.status === Status.error) {
                 this.error(data.error)
             }
 
             if (data.status === Status.complete) {
-                this.success("Oppdatert")
+
+                if(data.data.auth) {
+                    this.success("Lagring vellykket")
+                } else {
+                    this.setLoggedInStatus(false)
+                    this.error("Ikke lenger logget inn")
+                }
+                
+                this.getTextData(offset)
             }
         })
     }
@@ -81,8 +109,13 @@ class Actions {
                 this.error(data.error)
             }
             if (data.status === Status.complete) {
-                this.success("Lagring vellykket")
-                this.getPhotos(offset)
+                if(data.data.auth) {
+                    this.success("Lagring vellykket")
+                    this.getPhotos(offset)
+                } else {
+                    this.error("Ikke lenger logget inn")
+                    this.setLoggedInStatus(false)
+                }                 
             } else {
                 this.store.setState({ photoList: defaultRemoteData })
             }
@@ -96,8 +129,13 @@ class Actions {
                 this.error(data.error)
             }
             if (data.status === Status.complete) {
-                this.success("Bilde slettet")
-                this.getPhotos(offset)
+                if(data.data.auth) {
+                    this.success("Bilde slettet")
+                    this.getPhotos(offset)
+                } else {
+                    this.error("Ikke lenger logget inn")
+                    this.setLoggedInStatus(false)
+                }                 
             } else {
                 this.store.setState({ photoList: defaultRemoteData })
             }
@@ -111,8 +149,13 @@ class Actions {
                 this.error(data.error)
             }
             if (data.status === Status.complete) {
-                this.success("Bilde slettet")
-                this.getPhotos(offset)
+                if(data.data.auth) {
+                    this.success("Bilder slettet")
+                    this.getPhotos(offset)
+                } else {
+                    this.error("Ikke lenger logget inn")
+                    this.setLoggedInStatus(false)
+                }  
             } else {
                 this.store.setState({ photoList: defaultRemoteData })
             }
@@ -126,8 +169,13 @@ class Actions {
                 this.error(data.error)
             }
             if (data.status === Status.complete) {
-                this.success("Lagring vellykket")
-                this.getPhotos(window.pageYOffset)
+                if(data.data.auth) {
+                    this.success("Lagring vellykket")
+                    this.getPhotos(window.pageYOffset)
+                } else {
+                    this.error("Ikke lenger logget inn")
+                    this.setLoggedInStatus(false)
+                }                  
             }
         })
     }
@@ -152,8 +200,14 @@ class Actions {
                 this.error(data.error)
             }
             if (data.status === Status.complete) {
-                this.success("Lagring vellykket")
-                this.getPdfs(offset)
+                if(data.data.auth) {
+                    this.success("Lagring vellykket")
+                } else {
+                    this.error("Ikke lenger logget inn")
+                    this.setLoggedInStatus(false)
+                } 
+
+                this.getPdfs(offset)                
             } else {
                 this.store.setState({ pdfList: defaultRemoteData })
             }
@@ -167,8 +221,13 @@ class Actions {
                 this.error(data.error)
             }
             if (data.status === Status.complete) {
-                this.success("Lagring vellykket")
-                this.getPdfs(offset)
+                if(data.data.auth) {
+                    this.success("Lagring vellykket")
+                    this.getPdfs(offset)
+                } else {
+                    this.error("Ikke lenger logget inn")
+                    this.setLoggedInStatus(false)
+                }                 
             } else {
                 this.store.setState({ pdfList: defaultRemoteData })
             }
@@ -182,12 +241,21 @@ class Actions {
                 this.error(data.error)
             }
             if (data.status === Status.complete) {
-                this.success("PDF slettet")
-                this.getPdfs(offset)
+                if(data.data.auth) {
+                    this.success("PDF slettet")
+                    this.getPdfs(offset)
+                } else {
+                    this.error("Ikke lenger logget inn")
+                    this.store.setState({loggedIn: false})
+                }                 
             } else {
                 this.store.setState({ pdfList: defaultRemoteData })
             }
         })
+    }
+
+    toogleEditMode() {
+        this.setEditMode()
     }
 
 }

@@ -21,16 +21,11 @@ function Gallery(props: Props) {
     const getImages = (images:Photo[]) => {
         let imageList:any = []
         images.forEach((p: Photo) => {
-            var image = require("../../../src/Images/uploads/" + p.id).default
-
+            var image = require("../../../src/Images/uploads/" + p.id).default            
             imageList.push({
                 original: image,
                 thumbnail: image,
-                description: p.title,
-                sizes: {
-                    height: "200px",
-                    width: "auto"
-                }
+                description: p.title
             })
         })
 

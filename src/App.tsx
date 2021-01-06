@@ -29,7 +29,8 @@ interface Props {
 interface State {
   successMessage: string,
   errorMessage: string,
-  loggedIn: boolean
+  loggedIn: boolean,
+  editMode: boolean
 }
 
 export default class App extends React.Component<Props, State> {
@@ -42,17 +43,25 @@ export default class App extends React.Component<Props, State> {
     super(props)
     this.state = {
       successMessage: "", 
-      errorMessage: "", 
-      loggedIn: false
+      errorMessage: "",
+      loggedIn: false,
+      editMode: true
     }
 
     this.setErrorMessage = this.setErrorMessage.bind(this)
     this.setSuccessMessage = this.setSuccessMessage.bind(this)
+    this.setLoggedInStatus = this.setLoggedInStatus.bind(this)
+    this.setEditMode = this.setEditMode.bind(this)
+
 
     this.store = new Store()
     this.requests = new Requests()
-    this.actions = new Actions(this.requests, this.store, this.setErrorMessage, this.setSuccessMessage, (loggedIn: boolean) => this.setLoggedInStatus(loggedIn))
+    this.actions = new Actions(this.requests, this.store, this.setErrorMessage, this.setSuccessMessage, this.setLoggedInStatus, this.setEditMode)
 
+  }
+
+  componentDidMount() {
+    this.actions.loggedIn()
   }
 
   setSuccessMessage(message:string) {
@@ -73,7 +82,11 @@ export default class App extends React.Component<Props, State> {
     this.setState({loggedIn: loggedIn})
   }
 
-  getYear() {
+  setEditMode() {
+    this.setState({editMode: !this.state.editMode})
+  }
+
+  getJulenyttYear() {
     var d = new Date()
     var year = d.getFullYear()
     var month = d.getMonth()
@@ -85,16 +98,18 @@ export default class App extends React.Component<Props, State> {
     }
   }
   
-
+  getCurrentYear = () => {
+    var d = new Date()
+    return d.getFullYear()
+}
   
   render() {
- 
     return (
       <Router>
         <div className="julenytt">
           <nav className="julenytt-menu">
-            <NavLink className="julenytt-menu-item" activeClassName="menu-item-active" exact to="/">Julenytt {this.getYear()}</NavLink> 
-            <NavLink className="julenytt-menu-item" activeClassName="menu-item-active" exact to="/Bilder">{this.getYear()} i Bilete</NavLink> 
+            <NavLink className="julenytt-menu-item" activeClassName="menu-item-active" exact to="/">Julenytt {this.getJulenyttYear()}</NavLink> 
+            <NavLink className="julenytt-menu-item" activeClassName="menu-item-active" exact to="/Bilder">{this.getJulenyttYear()} i Bilete</NavLink> 
             <NavLink className="julenytt-menu-item" activeClassName="menu-item-active" exact to="/Arkiv">Arkiv</NavLink> 
           </nav>
 
@@ -104,7 +119,8 @@ export default class App extends React.Component<Props, State> {
               <HomePage 
                 actions={this.actions }
                 store={this.store}
-                loggedIn={this.state.loggedIn} 
+                edit={this.state.editMode}
+                loggedIn={this.state.loggedIn}
                 />
             </Route>  
 
@@ -112,30 +128,43 @@ export default class App extends React.Component<Props, State> {
               <PhotosPage
                 actions={this.actions}
                 store={this.store}
-                loggedIn={this.state.loggedIn} />
+                edit={this.state.editMode}
+                loggedIn={this.state.loggedIn}
+                />
             </Route>
 
             <Route path="/Arkiv" exact>
               <ArcivePage
                 actions={this.actions}
                 store={this.store}
-                loggedIn={this.state.loggedIn} />
+                edit={this.state.editMode}
+                loggedIn={this.state.loggedIn}
+                />
             </Route>                                 
 
             <Route path="/admin" exact>
               <AdminPage 
                 actions={this.actions}
-                store={this.store}/>
-            </Route> 
-
-            {/* <Route path="/Photos" exact>
-              <PhotosPage setSuccessMessage={this.setSuccessMessage} setErrorMessage={this.setErrorMessage} />
-            </Route>  
-            <Route path="/Photos" exact>
-              <ArcivePage setSuccessMessage={this.setSuccessMessage} setErrorMessage={this.setErrorMessage} />
-            </Route>  */}
-                                                            
+                store={this.store}
+                loggedIn={this.state.loggedIn}
+                />
+            </Route>                                                 
           </Switch>
+
+        {this.state.loggedIn && 
+          <div className="editButton">
+            { (this.state.loggedIn && this.state.editMode) &&
+              <input type="save" onClick={() => this.actions.toogleEditMode()}  value="Lukk redigering" />
+            }
+            { (this.state.loggedIn && !this.state.editMode) &&
+                <input type="save" onClick={() => this.actions.toogleEditMode()}  value="Åpne redigering" />
+            }
+          </div>
+        }
+
+          <div className="footer">
+            © {this.getCurrentYear()} - Klepaker
+          </div>
         </div>
       </Router>
     )

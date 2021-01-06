@@ -8,11 +8,11 @@ import Arcives from './Arcives'
 interface Props {
     actions: Actions
     store: Store
+    edit: boolean
     loggedIn: boolean
 }
 
 class ArcivePage extends React.Component<Props, {}> {
-
 
     componentDidMount() {
         this.props.actions.getPdfs(null)
@@ -22,13 +22,12 @@ class ArcivePage extends React.Component<Props, {}> {
         const renderHomes = (storeData: StoreData) =>
                 <LoadWrapper statusList={[storeData.pdfList.status]}>
                 <div className="pageContainer">
-                    <Arcives loggedIn={this.props.loggedIn} pdfs={storeData.pdfList.data} actions={this.props.actions} />
+                    <Arcives loggedIn={this.props.loggedIn} edit={this.props.edit}  pdfs={storeData.pdfList.data} actions={this.props.actions} />
                 </div>
             </LoadWrapper>
 
         return <StoreWrapper<StoreData> store={this.props.store} render={renderHomes} />
     }
-
 
 }
 

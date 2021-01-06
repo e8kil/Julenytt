@@ -6,6 +6,7 @@ interface Props {
     pdfs: Pdf[]
     loggedIn: boolean
     actions: any
+    edit: boolean
 }
 
 function Arcives(props: Props) {
@@ -15,12 +16,6 @@ function Arcives(props: Props) {
 
     const onChangeHandler = (event: any) => {
         updatePdf(event.target.files[0])
-
-        // const data = new FormData()
-        // data.append('file', event.target.files[0])
-        // for (var x = 0; x < event.target.files.length; x++) {
-        //     props.actions.uploadPdf(data, year)
-        // }
     }
 
     const uploadPdf = () => {
@@ -30,32 +25,31 @@ function Arcives(props: Props) {
     }
 
     return <div className="arcivesContainer">        
-            { props.pdfs.map((pdf:Pdf) => {
-                return <Arcive loggedIn={props.loggedIn} actions={props.actions} pdf={pdf}></Arcive>
+            { props.pdfs.map((pdf:Pdf, index:number) => {
+                return <Arcive key={index} loggedIn={props.loggedIn} edit={props.edit} actions={props.actions} pdf={pdf}></Arcive>
             })}
 
-            {props.loggedIn &&
+            {(props.loggedIn && props.edit) &&
                 <div className="editPdfs-upload-container">
                     <img src="https://img.icons8.com/wired/256/000000/pdf.png" />
                     
-                    {!pdf && <p>
+                    {!pdf && <div>
                         {/* Velg pdf-filen du ønsker å laste opp i filutforskeren.             */}
                         <div className="editPdfs-upload-file-button-container">
-                    Legg til PDF
+                            Legg til PDF
                             <input type="file" name="file" accept="application/pdf" onChange={(e) => onChangeHandler(e)} />
                         </div>
-                        </p>
+                        </div>
                     }
 
-                    {pdf && <p>
+                    {pdf && <div>
                         Skriv inn årstallet på utgaven du valgte. 
                         <div>
                             <input type="text" placeholder="Årstall " value={year > 0 ? year : ""} onChange={(e) => updateYear(parseInt(e.target.value))} />
                         </div>
                         <input type="save" className="edit-Pdfs-upload-image-button"  disabled={year == 0}  value={"Last opp"} onClick={() => uploadPdf()} />
-                    </p> }
+                    </div> }
                    
-                    {/* <button type="button" className="btn btn-success btn-block" onClick={() => onClickHandler()}>Upload</button>  */}
                 </div>
             }
 

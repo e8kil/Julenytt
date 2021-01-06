@@ -8,6 +8,10 @@ class Requests {
         this.apiUrl = "#{apiUrl}"
     }
 
+    loggedIn(callback: (data: AjaxData) => void) {
+        doRequest(''+this.apiUrl+'/loggedIn', 'POST', null, callback)
+    }
+
     logIn(login: Login, callback: (data: AjaxData) => void) {
         doRequest(''+this.apiUrl+'/login', 'POST', login, callback)
     }
@@ -53,7 +57,7 @@ class Requests {
     }  
 
     deletePdf(year: number, callback: (data: AjaxData) => void) {
-        doRequest(''+this.apiUrl+'/deletePdf/' + year + '', 'POST', File, callback)
+        doRequest(''+this.apiUrl+'/deletePdf/' + year + '', 'POST', null, callback)
     }  
 }
 

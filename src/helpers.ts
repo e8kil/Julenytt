@@ -1,4 +1,5 @@
 import { Status } from "./requestHelper"
+import { useHistory } from "react-router-dom";
 
 const getUniqueBy = (arr:any[], column:string) => {
     
@@ -45,4 +46,9 @@ const doubleDigit = (nb:number) => {
     return ("0" + nb).slice(-2)
 }
 
-export {getUniqueBy, loadingOrInitial, errorStatus, completeStatus, shortName, move, dateFormatter, doubleDigit}
+const history = (path:string) => {
+    let h = useHistory()
+    h.push(path)
+}
+
+export {getUniqueBy, loadingOrInitial, errorStatus, completeStatus, shortName, move, dateFormatter, doubleDigit, history}

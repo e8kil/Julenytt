@@ -23,7 +23,7 @@
 
     .gallery-container-homePage-fullscreen, .gallery-container-photosPage-fullscreen {
         .image-gallery-image {
-            height: calc(100% - 70px);
+            height: 80%;
             width: 90vw;
             margin-top: 35px;
             max-width: 90vw;
@@ -32,12 +32,19 @@
         .image-gallery-thumbnail img {
             width: auto;
             height: 100px;
-        }        
+        }
+        
+        .image-gallery-content {
+            position: relative;
+            line-height: 0;
+            top: 50%;
+            transform: translate(0%, -50%);
+        }
     }
 
     .gallery-container-photosPage {
         .image-gallery-content .image-gallery-slide .image-gallery-image {
-            height: calc(100vh - 160px);
+            height: 80%;
             margin-top: 10px;
         }    
 

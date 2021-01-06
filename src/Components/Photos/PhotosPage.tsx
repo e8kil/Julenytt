@@ -9,6 +9,7 @@ interface Props {
 
     actions: Actions
     store: Store
+    edit: boolean
     loggedIn: boolean
 }
 
@@ -23,7 +24,7 @@ class PhotosPage extends React.Component<Props, {}> {
         const renderHomes = (storeData: StoreData) =>
             <LoadWrapper statusList={[storeData.photoList.status]}>
                 <div className="pageContainer">
-                    <Photos imagePosition={3} extraClass={"photosPage"} loggedIn={this.props.loggedIn} photos={storeData.photoList.data} actions={this.props.actions} showThumbnails={true} autoplay={false} />
+                    <Photos imagePosition={3} extraClass={"photosPage"} loggedIn={this.props.loggedIn} edit={this.props.edit} photos={storeData.photoList.data} actions={this.props.actions} showThumbnails={true} autoplay={false} />
                 </div>
             </LoadWrapper>
 

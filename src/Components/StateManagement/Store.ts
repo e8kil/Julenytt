@@ -25,7 +25,7 @@ interface Pdf {
 interface StoreData {
     textData: AjaxData,
     photoList: AjaxData,
-    pdfList: AjaxData
+    pdfList: AjaxData,
     loggedIn: boolean
 }
 

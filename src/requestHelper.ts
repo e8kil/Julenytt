@@ -1,5 +1,5 @@
 import axios from 'axios'
-
+import { Store } from './Components/StateManagement/Store'
 interface AjaxParams {
     method: string,
     headers: HeadersInit,
@@ -33,10 +33,20 @@ async function doRequest(url: string, method: string, params: any, setData: (dat
 
     let response = null
     try {
+        const headers = {
+            'Content-Type': 'application/json',
+            'x-access-token': localStorage.getItem("token")
+        }
+
         if(method === "POST") {
-            response = await axios.post(url, params)
+            response = await axios.post(url, params, {
+                headers: headers
+            })
         } else if (method === "GET") {
-            response = await axios.get(url, params)
+            response = await axios.get(url, {
+                data: params,
+                headers: headers
+            })
         }
 
     } catch (error) {
@@ -51,43 +61,6 @@ async function doRequest(url: string, method: string, params: any, setData: (dat
     }
 }
 
-
-// async function doRequest(url:string, params:AjaxParams, setData:(data:any) => void) {
-//     setData({data: null, error: "", status: Status.loading})
-
-//     let response = null
-//     try {
-//         response = await fetch(url, {params})
-//     } catch (error) {
-//         setData({status: "error", data: null, error: "Request to " + url + " failed with error: " + error})
-//         return
-//     }   
-
-//     if (response.ok) {
-//         let responseData:any = ""
-//         try {
-//             switch (params.responseType) {
-//                 case ResponseType.ArrayBuffer: 
-//                     responseData = await response.arrayBuffer()
-//                 break; 
-//                 case ResponseType.Text: 
-//                     responseData = await response.text()
-//                 break; 
-//                 case ResponseType.Blob: 
-//                     responseData = await response.blob()
-//                 break; 
-//                 case ResponseType.Json: 
-//                     responseData = await response.json()
-//                 break;                    
-//             }
-//         } catch (error) {
-//             setData({status: Status.error, data: null, error: "Failed to parse response data into " + params.responseType + ". Error: " + error})
-//         }        
-//         setData({status: Status.complete, data: responseData, error: ""})            
-//     } else {
-//         setData({status: Status.error, data: null, error: "Request to " + url + " failed with status: " + response.status})
-//     }
-// }
 
 async function doPromiseRequest(url:string, method:string, params:any) {
     return new Promise((resolve, reject) => {

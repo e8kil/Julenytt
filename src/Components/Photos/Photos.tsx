@@ -11,13 +11,14 @@ interface Props {
     actions: any
     extraClass: string
     imagePosition: number
+    edit: boolean
 }
 
 function Photos(props: Props) {
 
     return <div>
-        {!props.loggedIn && <Gallery extraClass={props.extraClass} photos={props.photos} showThumbnails={props.showThumbnails} autoPlay={props.autoplay}></Gallery>}
-        {props.loggedIn && <EditPhotos imagePosition={props.imagePosition} actions={props.actions} photos={props.photos}></EditPhotos>}
+        {(!props.loggedIn || (props.loggedIn && !props.edit)) && <Gallery extraClass={props.extraClass} photos={props.photos} showThumbnails={props.showThumbnails} autoPlay={props.autoplay}></Gallery>}
+        {(props.loggedIn && props.edit) && <EditPhotos imagePosition={props.imagePosition} actions={props.actions} photos={props.photos}></EditPhotos>}
     </div >
 
 }

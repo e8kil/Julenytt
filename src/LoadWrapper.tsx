@@ -16,7 +16,7 @@ const LoadWrapper: React.FunctionComponent<Props> = props => {
     if (loading) {
         return <Loader />
     } else if (complete) {
-        return <div>{props.children}</div>
+        return <>{props.children}</>
     } else {
         return <span></span>
     }

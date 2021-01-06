@@ -5,11 +5,13 @@ import LoadWrapper from '../../LoadWrapper'
 import Actions from '../StateManagement/Actions'
 import { Store, StoreData } from '../StateManagement/Store'
 import Header from '../Header/Header'
+import { Redirect } from 'react-router-dom'
 
 interface Props {
 
     actions: Actions
     store: Store
+    edit: boolean
     loggedIn: boolean
 }
 
@@ -18,7 +20,7 @@ class HomePage extends React.Component<Props, {}> {
 
     componentDidMount() {
         this.props.actions.getPhotos(null)
-        this.props.actions.getTextData()
+        this.props.actions.getTextData(0)
     }
 
     getYear() {
@@ -38,7 +40,7 @@ class HomePage extends React.Component<Props, {}> {
             <>
                 <Header year={this.getYear()}></Header>
                 <LoadWrapper statusList={[storeData.textData.status, storeData.photoList.status]}> 
-                    <Home loggedIn={this.props.loggedIn} storeData={storeData} actions={this.props.actions} /> 
+                    <Home loggedIn={this.props.loggedIn} edit={this.props.edit} storeData={storeData} actions={this.props.actions} /> 
                 </LoadWrapper>
             </>
 

@@ -10,6 +10,7 @@ interface Props {
     storeData: StoreData
     actions: Actions
     loggedIn: boolean
+    edit: boolean
 }
 
 function Home(props: Props) {
@@ -24,15 +25,15 @@ function Home(props: Props) {
 
     return <div className="content">
         
-        {textData[0].txt !== "" && <TextContainer actions={props.actions} loggedIn={props.loggedIn} text={textData[0]} ></TextContainer> }
+        {textData[0].txt !== "" && <TextContainer actions={props.actions} loggedIn={props.loggedIn} edit={props.edit} text={textData[0]} storeData={props.storeData} ></TextContainer> }
 
-        <Photos imagePosition={1} extraClass={"homePage"} actions={props.actions} loggedIn={props.loggedIn} photos={getPhotosForRow(1)} showThumbnails={true} autoplay={true}></Photos>
+        <Photos imagePosition={1} extraClass={"homePage"} actions={props.actions} loggedIn={props.loggedIn} edit={props.edit} photos={getPhotosForRow(1)} showThumbnails={true} autoplay={true}></Photos>
 
-        {textData[1].txt !== "" && <TextContainer actions={props.actions} loggedIn={props.loggedIn} text={textData[1]} ></TextContainer> }
+        {textData[1].txt !== "" && <TextContainer actions={props.actions} loggedIn={props.loggedIn} edit={props.edit} text={textData[1]} storeData={props.storeData}></TextContainer> }
 
-        <Photos imagePosition={2}  extraClass={"homePage"} actions={props.actions} loggedIn={props.loggedIn} photos={getPhotosForRow(2)} showThumbnails={true} autoplay={true}></Photos>
+        <Photos imagePosition={2}  extraClass={"homePage"} actions={props.actions} loggedIn={props.loggedIn} edit={props.edit} photos={getPhotosForRow(2)} showThumbnails={true} autoplay={true}></Photos>
 
-        {textData[2].txt !== "" && <TextContainer actions={props.actions} loggedIn={props.loggedIn} text={textData[2]} ></TextContainer> }
+        {textData[2].txt !== "" && <TextContainer actions={props.actions} loggedIn={props.loggedIn} edit={props.edit} text={textData[2]} storeData={props.storeData}></TextContainer> }
 
     </div>
 
