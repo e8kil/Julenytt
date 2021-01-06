@@ -1,6 +1,6 @@
 # Julenytt
 
-Opprett 3 mapper på root:
+Opprett 3 mapper i .src/:
 
 Images/uploads
 PdfFiles
