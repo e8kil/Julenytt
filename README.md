@@ -2,7 +2,7 @@
 
 Opprett 3 mapper på root:
 
-Images
+Images/uploads
 PdfFiles
 PdfImages
 
