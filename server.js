@@ -64,7 +64,7 @@ app.post('/login', function (req, res) {
             const userData = Object.assign({}, results[0])
             id = userData.user
             const token = jwt.sign({id}, process.env.secret, {
-                expiresIn: 10
+                expiresIn: 3600
             })
             res.json({auth: true, token: token, user: id})
         } else {
